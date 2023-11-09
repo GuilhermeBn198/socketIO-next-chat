@@ -1,5 +1,6 @@
 "use client";
 import ChatPage from "@/components/chat/ChatPage";
+import { useConnection } from "@/context/connect";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -8,16 +9,22 @@ export default function Home() {
     const [showChat, setShowChat] = useState(false);
     const [userName, setuserName] = useState("");
 
+    const {connection} = useConnection()
+
     function handleJoin(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         console.log(userName);
         // logica de login -SocketIO
-        setShowChat(true)
+
+        setShowChat(true);  
     }
 
     return (
         <main className="flex w-full h-screen">
-            <div className="flex flex-col w-full h-full justify-center items-center gap-2">
+            <div
+                className="flex flex-col w-full h-full justify-center items-center gap-2"
+                style={{ display: showChat ? "" : "none" } /**/}
+            >
                 <div className="w-1/5">
                     <Image
                         src="/images/logo-dcc-01.png"
@@ -52,11 +59,8 @@ export default function Home() {
                     </form>
                 </div>
             </div>
-            <div
-                className="w-full"
-                style={{ display: showChat ? "" : "none" }}
-            >
-               <ChatPage userName={userName} />
+            <div className="w-full" style={{ display: showChat ? "" : "none" }}>
+                <ChatPage userName={userName} />
             </div>
         </main>
     );

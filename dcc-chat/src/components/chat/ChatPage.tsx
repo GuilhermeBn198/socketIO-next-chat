@@ -1,11 +1,17 @@
-"client component"
+"client component";
 
 import Image from "next/image";
 import { useState } from "react";
 
-export default function ChatPage({ userName }: any) {
+interface IMsgDatTypes {
+    user: string;
+    msg: string;
+    time: string;
+}
 
-    const [currentMsg, setCurrentMsg] = useState("")
+export default function ChatPage({ userName }: any) {
+    const [currentMsg, setCurrentMsg] = useState("");
+    const [chatMessages, setChatMessages] = useState<IMsgDatTypes[]>([]);
 
     return (
         <div className="flex ">
@@ -13,7 +19,7 @@ export default function ChatPage({ userName }: any) {
             <div className="flex flex-col w-96 h-screen bg-green-300 p-3 gap-6 border-green-600">
                 <div className="w-1/5">
                     <Image
-                        src="/images/logo-chat-dcc.png"
+                        src="/logo-chat-dcc.png"
                         alt="logo Chat-DCC"
                         width={0}
                         height={0}
@@ -22,16 +28,24 @@ export default function ChatPage({ userName }: any) {
                         priority
                     />
                 </div>
-                <div>
+                <div className="flex flex-col gap-2">
                     <span>USUÁRIOS ONLINE</span>
-                    <span>...</span>
                     <span>{userName}</span>
+                    <span>...</span>
                 </div>
             </div>
 
             {/* Main Chat */}
             <div className="flex flex-col w-full h-screen px-10 py-5 bg-yellow-100 justify-between">
-                <div>mensagens</div>
+                <div>
+                    {chatMessages.map(({ user, msg, time }, key) => (
+                        <div key={key} className="p-5">
+                            <div>{user}:</div>
+                            <div>{msg}</div>
+                            <div>{time}</div>
+                        </div>
+                    ))}
+                </div>
 
                 <div>
                     <form className="flex gap-2 w-full justify-between">
