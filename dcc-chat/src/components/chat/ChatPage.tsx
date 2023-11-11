@@ -28,18 +28,19 @@ export default function ChatPage({ userName }: any) {
                     new Date(Date.now()).getMinutes(),
             };
 
-            connection.emit("send-message", newMsg)
+            connection.emit("send-message", newMsg);
             setCurrentMsg("");
         }
     }
 
-    useEffect(() => { //atualiza a lista de mensagens no cliente
+    useEffect(() => {
+        //atualiza a lista de mensagens no cliente
         if (connection) {
-            connection.on("receive-msg", (msg:IMsgDatTypes) => {
-                setChatMessages((msgs) => [...msgs, msg])
-            })
+            connection.on("receive-msg", (msg: IMsgDatTypes) => {
+                setChatMessages((msgs) => [...msgs, msg]);
+            });
         }
-    }, [connection])
+    }, [connection]);
 
     return (
         <div className="flex ">
@@ -67,9 +68,14 @@ export default function ChatPage({ userName }: any) {
             <div className="flex flex-col w-full h-screen px-10 py-5 bg-yellow-100 justify-between">
                 <div>
                     {chatMessages.map(({ user, msg, time }, key) => (
-                        <div key={key} className="flex flex-row p-3 text-neutral-800 bg-slate-300 w-3/3 mb-1 place-content-between rounded">
-                            <div>{user}:</div>
-                            <div>{msg}</div>
+                        <div
+                            key={key}
+                            className="flex flex-row p-3 text-neutral-800 bg-slate-300 w-3/3 mb-1 place-content-between rounded"
+                        >
+                            <div className="flex flex-row ">
+                                <div><strong>{user}:</strong></div>
+                                <div>{msg}</div>
+                            </div>
                             <div>{time}</div>
                         </div>
                     ))}
@@ -90,7 +96,7 @@ export default function ChatPage({ userName }: any) {
 
                         <button
                             type="submit"
-                            className="inline-flex items-center justify-center px-4 py-2 text-base front-medium leading-6 text-white bg-slate-500 focus:ring-2  w-1/4 focus:ring-offset-2 focus:ring-blue-500"
+                            className="inline-flex items-center justify-center px-4 py-2 text-base front-medium leading-6 text-white bg-slate-500 focus:ring-2  w-1/4 rounded focus:ring-offset-2 focus:ring-blue-500"
                         >
                             Enviar
                         </button>
