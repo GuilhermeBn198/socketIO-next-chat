@@ -8,26 +8,33 @@ export default function Home() {
     const [showSpinner, setShowSpinner] = useState(false);
     const [showChat, setShowChat] = useState(false);
     const [userName, setuserName] = useState("");
-
+    
     const {connection} = useConnection()
 
     function handleJoin(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        console.log(userName);
-        // logica de login -SocketIO
 
-        setShowChat(true);  
+        // logica de login no chat -SocketIO
+        if(userName !== ""){
+            connection.emit("join_room", userName)
+            setShowSpinner(true)
+            setTimeout(() => {
+                setShowChat(true)
+                setShowSpinner(false)
+            }, 1000)
+        }
+        setShowChat(false);  
     }
 
     return (
         <main className="flex w-full h-screen">
             <div
                 className="flex flex-col w-full h-full justify-center items-center gap-2"
-                style={{ display: showChat ? "" : "none" } /**/}
+                style={{ display: showChat ? "none" : "" } /**/}
             >
                 <div className="w-1/5">
                     <Image
-                        src="/images/logo-dcc-01.png"
+                        src="/logo-dcc-01.png"
                         alt="Logo Chat-DCC"
                         width={0}
                         height={0}
@@ -48,12 +55,12 @@ export default function Home() {
 
                         <button
                             type="submit"
-                            className="inline-flex items-center justify-center px-4 py-2 text-base front-medium leading-6 text-white focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                            className="inline-flex items-center justify-center px-4 py-2 text-base front-medium leading-6 rounded text-white bg-slate-500 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                         >
                             {!showSpinner ? (
                                 "Entrar"
                             ) : (
-                                <div className="border-4 border-solid border-t-4 border-[#2196f3] rounder-lg w-5 h-5 animate-spin"></div>
+                                <div className="border-4 border-solid  border-t-4 border-[#2196f3] rounder-lg w-5 h-5 animate-spin"></div>
                             )}
                         </button>
                     </form>

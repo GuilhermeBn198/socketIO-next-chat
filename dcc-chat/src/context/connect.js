@@ -1,7 +1,7 @@
 "use client";
 
 import { useContext, createContext, useState, useEffect } from "react";
-import io from "sockect.io-client";
+import io from "socket.io-client";
 
 const Context = createContext();
 
@@ -28,7 +28,9 @@ export const Provider = ({ children }) => {
     }, []);
 
     return (
-        <Context.Provider value={{ ...data }}> {children} </Context.Provider>
+        <Context.Provider value={{ ...data }}> 
+        {children} 
+        </Context.Provider>
     );
 };
 
