@@ -4,6 +4,15 @@ app developed with the help of Professor Acauan Ribeiro
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Todo
+
+- [x] Transmita uma mensagem para usuários conectados quando alguém se conectar ou desconectar.  
+- [] Adicione suporte para nicknames.
+- [x] Não envie a mesma mensagem para o usuário que a enviou. Em vez disso, anexe a mensagem diretamente assim que pressionar Enter.
+- [] Adicione a funcionalidade “{user} está digitando”.
+- [x] Mostre quem está online.
+- [] Adicione mensagens privadas.
+
 ## Getting Started
 
 First, run the development server:
