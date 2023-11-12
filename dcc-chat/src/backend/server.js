@@ -16,14 +16,22 @@ const io = new Server(httpServer, {
 
 io.on("connection", async (socket) => {
     console.log("user connected: ", socket.id)
-
+    
     socket.on("join_room", (userName) => {
         console.log(`Username: ${userName} - Socket: ${socket.id}`);
+        io.emit('user_joined', `${userName} has joined the chat`); // broadcast message
     })
 
     socket.on("send-message", (msg) => {
         console.log(msg, "MSG");
         io.emit("receive-msg", msg)
+    })
+
+    socket.on("user-disconnect", () => {
+        console.log("user disconnected: ", socket.id);
+        const userName = users[socket.id]; // get username
+        io.emit('user_left', `${userName} has left the chat`);
+        delete users[socket.id]; // remove username
     })
 })
 
