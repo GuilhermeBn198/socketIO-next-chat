@@ -19,7 +19,7 @@ io.on("connection", async (socket) => {
     
     socket.on("join_room", (userName) => {
         console.log(`Username: ${userName} - Socket: ${socket.id}`);
-        io.emit('user_joined', `${userName} has joined the chat`); // broadcast message
+        io.emit('user_joined', `${userName} está online!`); // broadcast message
     })
 
     socket.on("send-message", (msg) => {
@@ -30,7 +30,7 @@ io.on("connection", async (socket) => {
     socket.on("user-disconnect", () => {
         console.log("user disconnected: ", socket.id);
         const userName = users[socket.id]; // get username
-        io.emit('user_left', `${userName} has left the chat`);
+        io.emit('user_left', `${userName} deixou o chat!`);
         delete users[socket.id]; // remove username
     })
 })
